@@ -11,12 +11,13 @@
         android:layout_width="159dp"
         android:layout_height="107dp"
         android:text="BEM VINDO!"
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.586"
         tools:ignore="ExtraText" />
 
     <Button
@@ -24,8 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="->"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="657dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="661dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
