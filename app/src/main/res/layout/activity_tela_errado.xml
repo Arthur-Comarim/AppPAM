@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".TelaErrado">
 
+    <TextView
+        android:id="@+id/textFail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Senha Incorreta"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="220dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

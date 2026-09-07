@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        Button bntProximo = findViewById(R.id.btnProxima);
-        bntProximo.setOnClickListener ( v -> {
+        Button btnProximo = findViewById(R.id.btnProxima);
+        btnProximo.setOnClickListener ( v -> {
             Intent intent = new Intent(MainActivity.this, TelaLogin.class);
             startActivity(intent);
         });

@@ -20,12 +20,22 @@ public class TelaLogin extends AppCompatActivity {
         setContentView(R.layout.activity_tela_login);
 
         EditText editNome = findViewById(R.id.editNome);
-        String Nome = editNome.getText().toString();
         EditText editSenha = findViewById(R.id.editSenha);
-        String Senha = editNome.getText().toString();
+        Button btnEntrar = findViewById(R.id.btnEntrar);
 
+        btnEntrar.setOnClickListener(v ->{
+            String Nome = editNome.getText().toString();
+            String NomeMin = Nome.toLowerCase();
+            String Senha = editSenha.getText().toString();
 
-
+            if (NomeMin.equals("arthur") || NomeMin.equals("emanuel") || NomeMin.equals("marcos") && Senha.equals("1234")){
+                Intent intent = new Intent(TelaLogin.this, TelaAcerto.class);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(TelaLogin.this, TelaErrado.class);
+                startActivity(intent);
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
