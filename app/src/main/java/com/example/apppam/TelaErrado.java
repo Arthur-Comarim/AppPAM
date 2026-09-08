@@ -1,6 +1,7 @@
 package com.example.apppam;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,16 @@ public class TelaErrado extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_errado);
+
+
+new CountDownTimer(10000, 1000) { // 10s totais, atualiza a cada 1s
+            public void onTick(long millisUntilFinished) {
+                textTimer.setText("Restam: " + millisUntilFinished / 1000 + "s");
+            }
+            public void onFinish() {
+                textTimer.setText("Tempo esgotado!");
+            }
+        }.start();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

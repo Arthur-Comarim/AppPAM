@@ -1,6 +1,8 @@
 package com.example.apppam;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +18,11 @@ public class TelaAcerto extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_acerto);
 
-
+        Button btnVoltar = findViewById(R.id.btnVoltar);
+        btnVoltar.setOnClickListener ( v -> {
+            Intent intent = new Intent(TelaAcerto.this, MainActivity.class);
+            startActivity(intent);
+        });
 
 
 
