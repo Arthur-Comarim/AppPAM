@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +37,8 @@ public class TelaLogin extends AppCompatActivity {
             String NomeMin = Nome.toLowerCase();
             String Senha = editSenha.getText().toString();
 
-            if (NomeMin.equals("arthur") && Senha.equals("1234")){
+            if (Usuario.nome != null && NomeMin.equals(Usuario.nome.toLowerCase())
+                    && Usuario.senha != null && Senha.equals(Usuario.senha)) {
                 Intent intent = new Intent(TelaLogin.this, TelaAcerto.class);
                 startActivity(intent);
             }else {
@@ -45,6 +47,12 @@ public class TelaLogin extends AppCompatActivity {
                 intent.putExtra("tentativas", tentativas);
                 startActivity(intent);
             }
+        });
+
+        TextView txtCadastro = findViewById(R.id.textCadastro);
+        txtCadastro.setOnClickListener(v -> {
+            Intent intent = new Intent(TelaLogin.this, TelaCadastro.class);
+            startActivity(intent);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
