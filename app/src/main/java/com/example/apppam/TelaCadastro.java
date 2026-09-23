@@ -1,6 +1,9 @@
 package com.example.apppam;
 
+import static android.os.Build.VERSION_CODES_FULL.R;
+
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
@@ -60,12 +63,69 @@ public class TelaCadastro extends AppCompatActivity {
         imgFoto = findViewById(R.id.imgFoto);
         Button btnGaleria = findViewById(R.id.btnGaleria);
         Button btnCamera = findViewById(R.id.btnCamera);
+        Button btnFinalizar = findViewById(R.id.btnFinalizar);
 
         btnGaleria.setOnClickListener(v -> galeriaLauncher.launch("image/*"));
         btnCamera.setOnClickListener(v -> cameraLauncher.launch(null));
 
-
+        EditText editNome = findViewById(R.id.editNome);
+        EditText editSobrenome = findViewById(R.id.editSobrenome);
+        EditText editDataNascimento = findViewById(R.id.editDataNascimento);
+        EditText editTelefone = findViewById(R.id.editTelefone);
+        EditText editEmail = findViewById(R.id.editEmail);
+        EditText editConfirmaEmail = findViewById(R.id.editConfirmaEmail);
         EditText editSenha = findViewById(R.id.editSenha);
+        EditText editConfirmaSenha = findViewById(R.id.editConfirmaSenha);
+
+        btnFinalizar.setOnClickListener(v -> {
+            String nome = editNome.getText().toString().trim();
+            String sobrenome = editSobrenome.getText().toString().trim();
+            String dataNascimento = editDataNascimento.getText().toString().trim();
+            String telefone = editTelefone.getText().toString().trim();
+            String email = editEmail.getText().toString().trim();
+            String confirmaEmail = editConfirmaEmail.getText().toString().trim();
+            String senha = editSenha.getText().toString();
+            String confirmaSenha = editConfirmaSenha.getText().toString();
+
+            if (!nome.matches("[\\p{L}\\s]+") || !sobrenome.matches("[\\p{L}\\s]+")) {
+                Toast.makeText(this, "Nome e sobrenome devem conter só letras", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!email.contains("@")) {
+                Toast.makeText(this, "Email inválido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!email.equals(confirmaEmail)) {
+                Toast.makeText(this, "Os emails não coincidem", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!senha.equals(confirmaSenha)) {
+                Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!validarData(dataNascimento)) {
+                Toast.makeText(this, "Data de nascimento inválida", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // tudo certo — salva no "cofre" static
+            Usuario.nome = nome;
+            Usuario.sobrenome = sobrenome;
+            Usuario.dataNascimento = dataNascimento;
+            Usuario.telefone = telefone;
+            Usuario.email = email;
+            Usuario.senha = senha;
+            Usuario.foto = fotoSelecionada;
+
+            Intent intent = new Intent(TelaCadastro.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         Button btnMostrarSenha = findViewById(R.id.btnMostrarSenha);
 
         btnMostrarSenha.setOnTouchListener((v, event) -> {
@@ -75,7 +135,7 @@ public class TelaCadastro extends AppCompatActivity {
                 editSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD); // esconde de novo
             }
             editSenha.setSelection(editSenha.getText().length()); // mantém o cursor no fim
-            return true; // true = "eu tratei esse toque, não precisa fazer mais nada"
+            return true; // finalizei essa merda, se preocupa não
         });
 
 
