@@ -1,6 +1,5 @@
 package com.example.apppam;
 
-import static android.os.Build.VERSION_CODES_FULL.R;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class TelaCadastro extends AppCompatActivity {
 
@@ -50,7 +50,25 @@ public class TelaCadastro extends AppCompatActivity {
                 }
             });
 
+    private boolean validarData(String data) {
+        try {
+            String[] partes = data.split("/");
+            if (partes.length != 3) return false;
 
+            int dia = Integer.parseInt(partes[0]);
+            int mes = Integer.parseInt(partes[1]);
+            int ano = Integer.parseInt(partes[2]);
+
+            int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
+
+            return dia >= 1 && dia <= 31
+                    && mes >= 1 && mes <= 12
+                    && ano >= 1900
+                    && ano <= anoAtual;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override

@@ -12,7 +12,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TelaLogin extends AppCompatActivity {
 
@@ -34,10 +33,10 @@ public class TelaLogin extends AppCompatActivity {
         btnEntrar.setOnClickListener(v ->{
 
             String Nome = editNome.getText().toString();
-            String NomeMin = Nome.toLowerCase();
+
             String Senha = editSenha.getText().toString();
 
-            if (Usuario.nome != null && NomeMin.equals(Usuario.nome.toLowerCase())
+            if (Usuario.nome != null && Nome.equals(Usuario.nome.toLowerCase())
                     && Usuario.senha != null && Senha.equals(Usuario.senha)) {
                 Intent intent = new Intent(TelaLogin.this, TelaAcerto.class);
                 startActivity(intent);

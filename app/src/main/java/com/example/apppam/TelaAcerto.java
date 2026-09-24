@@ -1,8 +1,12 @@
 package com.example.apppam;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +16,26 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class TelaAcerto extends AppCompatActivity {
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_acerto);
+
+        ImageView imgFotoPerfil = findViewById(R.id.imgFotoPerfil);
+        TextView textInfo = findViewById(R.id.textInfo);
+
+        if (Usuario.foto != null) {
+            imgFotoPerfil.setImageBitmap(Usuario.foto);
+        }
+
+        textInfo.setText(Usuario.nome + " " + Usuario.sobrenome + "\n"
+                + "Nascimento: " + Usuario.dataNascimento + "\n"
+                + "Telefone: " + Usuario.telefone + "\n"
+                + "Email: " + Usuario.email);
 
         Button btnVoltar = findViewById(R.id.btnVoltar);
         btnVoltar.setOnClickListener ( v -> {
