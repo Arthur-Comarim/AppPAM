@@ -27,7 +27,11 @@ public class TelaLogin extends AppCompatActivity {
         EditText editNome = findViewById(R.id.editNome);
         EditText editSenha = findViewById(R.id.editSenha);
         Button btnEntrar = findViewById(R.id.btnEntrar);
+        TextView txtEsqueci = findViewById(R.id.textForget);
 
+        if (Usuario.nome == null){
+            txtEsqueci.setVisibility(TextView.GONE);
+        }
 
 
         btnEntrar.setOnClickListener(v ->{
@@ -60,5 +64,7 @@ public class TelaLogin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
     }
 }
