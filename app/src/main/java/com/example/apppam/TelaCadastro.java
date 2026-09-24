@@ -1,10 +1,8 @@
 package com.example.apppam;
 
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -27,9 +25,9 @@ import java.util.Calendar;
 
 public class TelaCadastro extends AppCompatActivity {
 
-
     private Bitmap fotoSelecionada;
     private ImageView imgFoto;
+
     private final ActivityResultLauncher<String> galeriaLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 if (uri != null) {
@@ -50,26 +48,6 @@ public class TelaCadastro extends AppCompatActivity {
                 }
             });
 
-    private boolean validarData(String data) {
-        try {
-            String[] partes = data.split("/");
-            if (partes.length != 3) return false;
-
-            int dia = Integer.parseInt(partes[0]);
-            int mes = Integer.parseInt(partes[1]);
-            int ano = Integer.parseInt(partes[2]);
-
-            int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
-
-            return dia >= 1 && dia <= 31
-                    && mes >= 1 && mes <= 12
-                    && ano >= 1900
-                    && ano <= anoAtual;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +55,11 @@ public class TelaCadastro extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_cadastro);
 
-
         imgFoto = findViewById(R.id.imgFoto);
         Button btnGaleria = findViewById(R.id.btnGaleria);
         Button btnCamera = findViewById(R.id.btnCamera);
         Button btnFinalizar = findViewById(R.id.btnFinalizar);
-
-        btnGaleria.setOnClickListener(v -> galeriaLauncher.launch("image/*"));
-        btnCamera.setOnClickListener(v -> cameraLauncher.launch(null));
+        Button btnMostrarSenha = findViewById(R.id.btnMostrarSenha);
 
         EditText editNome = findViewById(R.id.editNome);
         EditText editSobrenome = findViewById(R.id.editSobrenome);
@@ -94,6 +69,19 @@ public class TelaCadastro extends AppCompatActivity {
         EditText editConfirmaEmail = findViewById(R.id.editConfirmaEmail);
         EditText editSenha = findViewById(R.id.editSenha);
         EditText editConfirmaSenha = findViewById(R.id.editConfirmaSenha);
+
+        btnGaleria.setOnClickListener(v -> galeriaLauncher.launch("image/*"));
+        btnCamera.setOnClickListener(v -> cameraLauncher.launch(null));
+
+        btnMostrarSenha.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                editSenha.setInputType(InputType.TYPE_CLASS_TEXT);
+            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                editSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            editSenha.setSelection(editSenha.getText().length());
+            return true;
+        });
 
         btnFinalizar.setOnClickListener(v -> {
             String nome = editNome.getText().toString().trim();
@@ -130,7 +118,6 @@ public class TelaCadastro extends AppCompatActivity {
                 return;
             }
 
-            // tudo certo — salva no "cofre" static
             Usuario.nome = nome;
             Usuario.sobrenome = sobrenome;
             Usuario.dataNascimento = dataNascimento;
@@ -144,34 +131,30 @@ public class TelaCadastro extends AppCompatActivity {
             finish();
         });
 
-        Button btnMostrarSenha = findViewById(R.id.btnMostrarSenha);
-
-        btnMostrarSenha.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                editSenha.setInputType(InputType.TYPE_CLASS_TEXT); // mostra o texto
-            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                editSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD); // esconde de novo
-            }
-            editSenha.setSelection(editSenha.getText().length()); // mantém o cursor no fim
-            return true; // finalizei essa merda, se preocupa não
-        });
-
-
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-
         });
     }
 
+    private boolean validarData(String data) {
+        try {
+            String[] partes = data.split("/");
+            if (partes.length != 3) return false;
 
+            int dia = Integer.parseInt(partes[0]);
+            int mes = Integer.parseInt(partes[1]);
+            int ano = Integer.parseInt(partes[2]);
 
+            int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
 
-
-
-
-
+            return dia >= 1 && dia <= 31
+                    && mes >= 1 && mes <= 12
+                    && ano >= 1900
+                    && ano <= anoAtual;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
